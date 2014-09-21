@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url, include
 from rango import views
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -6,7 +6,8 @@ from rango import views
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
-    url(r'^about/$', views.about, name='about')
+    url(r'^about/$', views.about, name='about'),
+    url(r'^category/(?P<category_name_url>\w+)/$', views.category, name='category')
     # Examples:
     # url(r'^$', 'tango_with_django_project.views.home', name='home'),
     # url(r'^tango_with_django_project/', include('tango_with_django_project.foo.urls')),
