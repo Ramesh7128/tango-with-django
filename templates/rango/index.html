@@ -6,7 +6,16 @@
     </head>
     <body>
         <h1>Rango says</h1>
-        hello world! <strong>{{ boldmessage }}</strong><br />
+        {%  if categories %}
+            <ul>
+                    {% for category in categories %}
+                    <li>
+                        {{ category.name }}
+                    </li>
+                    {%  endfor %}
+            </ul>
+        {% endif %}
+
         <a href="/rango/about/">About</a><br />
         <img src="{% static "dp.jpg" %}" alt = "dkjshkjhf" />
     </body>
