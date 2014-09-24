@@ -6,17 +6,29 @@
     </head>
     <body>
         <h1>Rango says</h1>
+        <p>Top most liked categories</p>
         {%  if categories %}
             <ul>
                     {% for category in categories %}
                     <li>
-                        <a href="category/{{ category.url }}">{{ category.name }}</a>
+                        <strong><a href="category/{{ category.url }}">{{ category.name }}</a>{{ category.likes }}</strong>
+
                     </li>
                     {%  endfor %}
+        {% endif %}
+        <p>-------------------------------------------------------------------</p>
+        <p>Top most visted pages</p>
+        {% if pages %}
+                    {% for page in pages %}
+                    <li>
+                        <strong>{{ page.title }}</strong>
+                        <strong>{{ page.views }}</strong>
+                    </li>
+                    {% endfor %}
             </ul>
         {% endif %}
 
-        <a href='/about'>About</a><br />
+        <a href='/about'>About</a><br/>
         <img src="{% static "dp.jpg" %}" alt = "dkjshkjhf" />
     </body>
 </html>
