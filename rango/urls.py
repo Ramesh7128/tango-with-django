@@ -7,7 +7,9 @@ from rango import views
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
-    url(r'^category/(?P<category_name_url>\w+)/$', views.category, name='category')
+    url(r'^add_category/$', views.add_category, name='add_category'),
+    url(r'^(?P<category_name_url>\w+)/$', views.category, name='category'),
+    url(r'^category/(?P<category_name_url>\w+)/add_page/$', views.add_pages, name='add_pages'),
     # Examples:
     # url(r'^$', 'tango_with_django_project.views.home', name='home'),
     # url(r'^tango_with_django_project/', include('tango_with_django_project.foo.urls')),

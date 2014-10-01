@@ -11,11 +11,13 @@
             <ul>
                     {% for category in categories %}
                     <li>
-                        <strong><a href="category/{{ category.url }}">{{ category.name }}</a>{{ category.likes }}</strong>
+                        <strong><a href="/rango/{{ category.url }}">{{ category.name }}</a>{{ category.likes }}</strong>
 
                     </li>
                     {%  endfor %}
         {% endif %}
+        <a href="/rango/add_category/">Add a New Category</a>
+
         <p>-------------------------------------------------------------------</p>
         <p>Top most visted pages</p>
         {% if pages %}
@@ -28,7 +30,7 @@
             </ul>
         {% endif %}
 
-        <a href='/about'>About</a><br/>
+        <a href='/rango/about'>About</a><br/>
         <img src="{% static "dp.jpg" %}" alt = "dkjshkjhf" />
     </body>
 </html>
