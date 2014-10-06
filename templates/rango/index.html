@@ -5,7 +5,11 @@
         <title>Rango</title>
     </head>
     <body>
-        <h1>Rango says</h1>
+        {% if user.is_authenticated %}
+        <h1>Rango says...hello {{ user.username }}</h1>
+        {% else %}
+        <h1>rango says...hello stranger!!!</h1>
+        {% endif %}
         <p>Top most liked categories</p>
         {%  if categories %}
             <ul>
@@ -16,8 +20,17 @@
                     </li>
                     {%  endfor %}
         {% endif %}
-        <a href="/rango/add_category/">Add a New Category</a>
 
+        {% if user.is_authenticated %}
+        <a href="/rango/restricted/">Restricted page</a>
+        <a href="/rango/logout/">Logout</a>
+        <a href="/rango/add_category/">Add a New Category</a><br />
+        {% else %}
+        <a href="/rango/register/">Register Here</a><br />
+        <a href="/rango/login/">Login</a><br />
+        {% endif %}
+
+        <a href='/rango/about'>About</a><br/>
         <p>-------------------------------------------------------------------</p>
         <p>Top most visted pages</p>
         {% if pages %}
@@ -30,7 +43,7 @@
             </ul>
         {% endif %}
 
-        <a href='/rango/about'>About</a><br/>
+
         <img src="{% static "dp.jpg" %}" alt = "dkjshkjhf" />
     </body>
 </html>
