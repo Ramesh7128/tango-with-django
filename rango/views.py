@@ -6,6 +6,7 @@ from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 def encode_url(url):
     url = url.replace(' ', '_')
@@ -16,6 +17,7 @@ def decode_url(url):
     return url
 
 def index(request):
+
     context = RequestContext(request)
     category_list = Category.objects.order_by('-likes')[:5]
     page_list = Page.objects.order_by('-views')[:5]
@@ -23,12 +25,46 @@ def index(request):
     for category in category_list:
          category.url = encode_url(category.name)#category.name.replace(' ', '_')
 
+    # response = render_to_response('rango/index.html', context_dict, context)
+    #
+    # visits = int(request.COOKIES.get('visits','0'))
+    #
+    # if 'last_visit' in request.COOKIES:
+    #     last_visit = request.COOKIES['last_visit']
+    #     last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+    #
+    #     if (datetime.now() - last_visit_time).seconds > 5:
+    #         response.set_cookie('visits', visits+1)
+    #         response.set_cookie('last_visit', datetime.now())
+
+    if request.session.get('last_visit'):
+        last_visit_time = request.session.get('last_visit')
+        visits = request.session.get('visits', 0)
+
+        if (datetime.now() - datetime.strptime(last_visit_time[:-7], "%Y-%m-%d %H:%M:%S")).seconds > 0:
+            request.session['visits'] = visits+1
+            request.session['last_visit'] = str(datetime.now())
+    else:
+        request.session['last_visit'] = str(datetime.now())
+        request.session['visits'] = 1
+
     return render_to_response('rango/index.html', context_dict, context)
+
+
+    # else:
+    #     response.set_cookie('last_visit', datetime.now())
+    #
+    # return response
+
+    #return render_to_response('rango/index.html', context_dict, context)
 
 
 def about(request):
     context = RequestContext(request)
     context_dict = {'variable_name': "this is a test about page"}
+    if request.session.get('visits'):
+        visits = request.session.get('visits')
+    context_dict['visits'] = visits
     return render_to_response('rango/about.html', context_dict, context)
 
 def category(request, category_name_url):
@@ -96,6 +132,7 @@ def add_pages(request, category_name_url):
                                                       'category_name':category_name}, context)
 
 def register(request):
+
     context = RequestContext(request)
     registered = False
 

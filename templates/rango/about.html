@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-{%  load static %}
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
-    <body>
+{% extends 'rango/base.html' %}
+{% load static %}
+{% block title %}Rango{% endblock %}
+{% block body_block %}
+    <div class="hero-unit">
         <h1>Rango about page</h1>
         <strong>{{ variable_name }}</strong><br />
         <a href="/rango">index</a><br />
+        <p>the no of visits to this page: {{ visits }}</p>
         <img src="{{ MEDIA_URL }}dp.jpg" %}" alt = "dkjshkjhf" />
-    </body>
-</html>
+    </div>
+{% endblock %}
