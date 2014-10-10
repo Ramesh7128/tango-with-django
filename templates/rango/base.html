@@ -37,6 +37,7 @@
                             <li><a href="/rango/add_category/">Add Category</a></li>
                            {% endif %}
                            <li><a href="/rango/about/">About</a></li>
+                           <li><a href="/rango/search/">Search</a></li>
                        </ul>
                    </div>
                    <!--/.nav-collapse -->
@@ -62,9 +63,10 @@
         </div>
         <!--/.fluid-container-->
         <hr>
+        {% include 'rango/category_list.html' %}
         <footer>
             <div class="container">
-                <p>&copy; Rango: How to Tango with Django 2013</p>
+                <p>&copy; Rango: How to Tango with Django</p>
             </div>
         </footer>
         <script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>

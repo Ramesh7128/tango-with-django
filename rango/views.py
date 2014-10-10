@@ -7,6 +7,7 @@ from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from rango.bing_search import run_query
 
 def encode_url(url):
     url = url.replace(' ', '_')
@@ -15,6 +16,11 @@ def encode_url(url):
 def decode_url(url):
     url = url.replace('_', ' ')
     return url
+
+def get_category_list():
+    cat_list = Category.objects.all()
+    return cat_list
+
 
 def index(request):
 
@@ -48,6 +54,8 @@ def index(request):
         request.session['last_visit'] = str(datetime.now())
         request.session['visits'] = 1
 
+    context_dict['cat_list'] = get_category_list()
+
     return render_to_response('rango/index.html', context_dict, context)
 
 
@@ -65,6 +73,8 @@ def about(request):
     if request.session.get('visits'):
         visits = request.session.get('visits')
     context_dict['visits'] = visits
+    context_dict['cat_list'] = get_category_list()
+
     return render_to_response('rango/about.html', context_dict, context)
 
 def category(request, category_name_url):
@@ -80,7 +90,7 @@ def category(request, category_name_url):
         context_dict['category_name_url'] = category_name_url
     except Category.DoesNotExist:
         pass
-
+    context_dict['cat_list'] = get_category_list()
     return render_to_response('rango/category.html', context_dict, context)
 
 def add_category(request):
@@ -98,6 +108,7 @@ def add_category(request):
 
     else:
         form = CategoryForm()
+
 
     return render_to_response('rango/add_category.html', {'form':form}, context)
 
@@ -190,6 +201,17 @@ def restricted(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/rango/')
+
+def search(request):
+    context=RequestContext(request)
+    result_list = []
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            result_list = run_query(query)
+
+    return render_to_response('rango/search.html', {'result_list': result_list}, context)
 
 
 
