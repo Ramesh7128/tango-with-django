@@ -5,7 +5,7 @@
 {% block body_block %}
     <div class="hero-unit">
         {% if user.is_authenticated %}
-        <h1>Rango says...hello {{ user.username }}</h1>
+        <h2>Rango says...Hello, {{ user.username }}!!</h2>
         {% else %}
         <h1>Rango says...hello stranger!!!</h1>
         {% endif %}
@@ -30,7 +30,7 @@
         {% if pages %}
             <ul>
                     {% for page in pages %}
-                    <li><a href="{{ page.url}}">{{ page.title }}</a> - {{ page.category }} -- {{ page.views }} view(s)</li>
+                    <li><a href="/rango/goto/?page_id={{ page.id }}">{{ page.title }}</a> - {{ page.category }} -- {{ page.views }} view(s)</li>
                     {% endfor %}
             </ul>
             {% else %}

@@ -26,6 +26,7 @@
                            {% if user.is_authenticated %}
                             <li class="navbar-text">Welcome, {{ user.username }}!</li>
                             <li><a href="/rango/logout/">Logout</a></li>
+                            <li><a href="/rango/profile/">profile</a></li>
                            {% else %}
                             <li><a href="/rango/register/">Register</a></li>
                             <li><a href="/rango/login/">Login</a></li>
@@ -47,6 +48,26 @@
             <div class="row-fluid">
                 <div class="span3">
                     <div class="well sidebar-nav">
+                        {% block sidebar %}
+                        {% endblock %}
+                        <ul class="nav nav-list">
+                            <li class="nav nav-he   ader">Find a category</li>
+                            <form action="/rango/suggest_category/" method="POST">
+                                {% csrf_token %}
+                                <li><input class="search.query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
+                                <li><input class="search.query span3" type="submit" name="submit" value="submit" /></li>
+                            </form>
+                        </ul>
+
+{#                        <input  class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" />#}
+{#                        {% if cat_list %}#}
+                        <div id="cats">
+
+{#                                <ul class="nav nav-list"><li><h3>Category list</h3></li></ul>#}
+                                {% include 'rango/category_list.html' %}
+
+                        </div>
+{#                        {% endif %}#}
                         <!--- Empty for the timebeing -->
                     </div>
                     <!--/.well -->
@@ -62,13 +83,14 @@
         </div>
         <!--/.fluid-container-->
         <hr>
-        {% include 'rango/category_list.html' %}
+        </div>
         <footer>
-            <div class="container">
+                <div class="container">
                 <p>&copy; Rango: How to Tango with Django</p>
             </div>
         </footer>
-        <script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
+        <script src="{% static 'js/jquery-2.1.1-.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static "js/rango-ajax.js" %}"></script>
     </body>
 </html>
