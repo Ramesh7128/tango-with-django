@@ -256,14 +256,13 @@ def get_url(request):
 @login_required
 def like_category(request):
     context = RequestContext(request)
-
     cat_id = None
-    if request.method == 'GET':
+    if request.method=='GET':
         cat_id = request.GET['category_id']
 
     likes = 0
     if cat_id:
-        category = Category.objects.get(id = int(cat_id))
+        category = Category.objects.get(id=int(cat_id))
         if category:
             likes = category.likes + 1
             category.likes = likes
@@ -273,13 +272,17 @@ def like_category(request):
 
 def suggest_category(request):
     context = RequestContext(request)
+    context_dict = {}
     cat_list = []
     starts_with = ''
     if request.method == 'POST':
         starts_with = request.POST['suggestion']
-    cat_list = get_category_list(8, starts_with)
-
-    return render_to_response('rango/index.html', {'cat_list': cat_list}, context)
+    context_dict['cat_list'] = get_category_list(8, starts_with)
+    category_list = Category.objects.order_by('-likes')[:5]
+    page_list = Page.objects.order_by('-views')[:5]
+    context_dict['categories'] = category_list
+    context_dict['pages'] = page_list
+    return render_to_response('rango/index.html', context_dict, context)
 
 
 
