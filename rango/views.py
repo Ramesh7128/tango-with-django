@@ -284,6 +284,33 @@ def suggest_category(request):
     context_dict['pages'] = page_list
     return render_to_response('rango/index.html', context_dict, context)
 
+@login_required
+def auto_addpage(request):
+    context = RequestContext(request)
+    if request.method == 'GET':
+        cat_id = request.GET['category_id']
+        page_title = request.GET['page_title']
+        page_url = request.GET['page_url']
+        context_dict = {}
+
+        category = Category.objects.get(id=int(cat_id))
+        pages = Page()
+        pages.category = category
+        pages.title = page_title
+        pages.url = page_url
+        pages.save()
+
+        pages = Page.objects.filter(category=category).order_by('-views')
+        context_dict['pages'] = pages
+
+
+    return render_to_response('rango/page_list.html', context_dict, context)
+
+
+
+
+
+
 
 
 

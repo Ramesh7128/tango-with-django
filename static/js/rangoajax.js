@@ -10,6 +10,20 @@ $(document).ready(function() {
         });
     });
 
+
+    $('.rango-add').click(function() {
+        var catid;
+        var pagetitle;
+        var pageurl;
+        catid = $(this).attr("data-catid");
+        pagetitle = $(this).attr("data-title");
+        pageurl = $(this).attr("data-url");
+        $.get('/rango/auto_addpage/', {category_id: catid, page_title: pagetitle, page_url: pageurl}, function(data) {
+            $('#pages').html(data);
+            $('#addlinks').hide();
+        });
+    });
+
 //    $('#suggestion').keyup(function() {
 //        var query;
 //        query = $(this).value();

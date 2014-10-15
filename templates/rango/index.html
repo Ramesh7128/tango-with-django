@@ -4,9 +4,9 @@
 {% block body_block %}
     <div class="hero-unit">
         {% if user.is_authenticated %}
-        <h2>Rango says...Hello, {{ user.username }}!!</h2>
+        <h3>Rango says...Hello, {{ user.username }}!!</h3>
         {% else %}
-        <h1>Rango says...hello stranger!!!</h1>
+        <h2>Rango says...hello stranger!!!</h2>
         {% endif %}
     <div class="row-fluid">
         <div class="span6">
