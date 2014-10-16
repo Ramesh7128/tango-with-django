@@ -48,15 +48,21 @@
             <div class="row-fluid">
                 <div class="span3">
                     <div class="well sidebar-nav">
-                        {% block sidebar %}
-                        {% endblock %}
                         <ul class="nav nav-list">
-                            <li class="nav nav-he   ader">Find a category</li>
-                            <form action="/rango/suggest_category/" method="POST">
-                                {% csrf_token %}
-                                <li><input class="search.query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
-                                <li><input class="search.query span3" type="submit" name="submit" value="submit" /></li>
-                            </form>
+                        <li></li>
+                        <li></li>
+                        {% block navbar %}
+                        {% endblock %}
+                        </ul>
+                        <ul class="nav nav-list">
+                            <li class="nav-header">Find a category</li>
+{#                            <form action="/rango/suggest_category/" method="POST">#}
+{#                                {% csrf_token %}#}
+                                <form>
+                                <li><input id="test" class="search.query span10" type="text" name="suggestion" value="" /></li>
+{#                                <li><input class="search.query span3" type="submit" name="submit" value="submit" /></li>#}
+{#                            </form>#}
+                                </form>
                         </ul>
 
 {#                        <input  class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" />#}
